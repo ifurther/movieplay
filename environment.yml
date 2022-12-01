@@ -1,0 +1,10 @@
+name: movietest
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python
+  - selenium
+  - fake-useragent
+  - python-gnupg
+  - requests
