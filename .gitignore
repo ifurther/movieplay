@@ -1,0 +1,5 @@
+geckodriver
+*.zip
+*.tar.gz
+*.log
+__pycache__/*
