@@ -9,7 +9,7 @@ Write-Host "Installing virtualenv"
 python -m pip install virtualenv
 
 ## build venv
-virtualenv venv -p ${system_python}
+python -m virtualenv venv -p ${system_python}
 
 Write-Host "Reload environment variables"
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
@@ -25,4 +25,4 @@ if ( $((get-command python)) -eq ${system_python}){
   return
 }
 
-pip install -r requirements.txt
+python -m pip install -r requirements.txt

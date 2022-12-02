@@ -6,3 +6,4 @@ geckodriver
 __pycache__/*
 */__pycache__/*
 chromedriver.exe
+*/__pycache__/*.*.pyc

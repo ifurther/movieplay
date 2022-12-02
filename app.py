@@ -10,10 +10,11 @@ from movieplay.downdriver import WindowsDownloadDriver,LinuxDownloadDriver
 from movieplay.dirversetting import FirefoxDriver,ChromeDriver
 from movieplay import initconfig
 config = configparser.ConfigParser()
-try:
+if Path('config.ini').exists():
     config.read('config.ini')
-except:
+else:
     initconfig
+    config.read('config.ini')
 work_dir = Path(config['GLOBAL']['WORKDIR'])
 runtimes = int(config['GLOBAL']['RUNNUMBER'])
 target_url = config['MOVIE']['MOVIEURL']
@@ -29,11 +30,12 @@ BROWSER_PATH = {
     '360jisu': 'SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\\360chrome.exe',
     'chrome': 'SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe',
     'edge': 'SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\msedge.exe',
-    'firefox': 'SOFTWARE\Clients\StartMenuInternet\FIREFOX.EXE\DefaultIcon'
+    'firefox': 'SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\\firefox.exe'
 }
 
-HEADER = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:53.0) Gecko/20100101 Firefox/106.0"
-
+#HEADER = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:53.0) Gecko/20100101 Firefox/106.0"
+AGENT = UserAgent(browsers=['edge', 'chrome','firefox'])
+HEADER = AGENT.random
 with open('firefoxdiverdownloadlist.json','r') as ch:
     firefox_links = json.load(ch)
 with open('chromediverdownloadlist.json','r') as ch:
@@ -78,7 +80,7 @@ def run_driver():
         from selenium.webdriver.chrome.options import Options
         opts = Options()
         opts.add_argument("--incognito")
-        if work_dir.parent == PosixPath('.'):
+        if work_dir.parent == Path('.'):
             binary_path = work_dir.joinpath(downloaddriver.driverfilename).absolute()
         else:
             binary_path = work_dir.joinpath(downloaddriver.driverfilename).as_posix()
@@ -88,7 +90,7 @@ def run_driver():
         from selenium.webdriver.firefox.options import Options
         opts = Options()
         opts.add_argument("--incognito")
-        if work_dir.parent == PosixPath('.'):
+        if work_dir.parent == Path('.'):
             binary_path = work_dir.joinpath(downloaddriver.driverfilename).absolute()
         else:
             binary_path = work_dir.joinpath(downloaddriver.driverfilename).as_posix()
@@ -100,10 +102,11 @@ def run_driver():
             EC.presence_of_element_located((By.ID, "movie_player")
         ))
         element.click()
-        time.sleep(movie_time)# 等待时常
+        time.sleep(movie_time)
     finally:
         Fdriver.driver.quit()
 for runi in range(runtimes):
     for i in range(total_cpu):
         t = threading.Thread(target=run_driver)
         t.start()
+    time.sleep(movie_time*2)
