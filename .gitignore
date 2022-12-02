@@ -3,3 +3,4 @@ geckodriver
 *.tar.gz
 *.log
 __pycache__/*
+chromedriver.exe
