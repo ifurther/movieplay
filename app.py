@@ -78,7 +78,7 @@ def run_driver():
         from selenium.webdriver.chrome.options import Options
         opts = Options()
         opts.add_argument("--incognito")
-        if work_dir.parent == PosixPath('.'):
+        if work_dir.parent == Path('.'):
             binary_path = work_dir.joinpath(downloaddriver.driverfilename).absolute()
         else:
             binary_path = work_dir.joinpath(downloaddriver.driverfilename).as_posix()
@@ -88,7 +88,7 @@ def run_driver():
         from selenium.webdriver.firefox.options import Options
         opts = Options()
         opts.add_argument("--incognito")
-        if work_dir.parent == PosixPath('.'):
+        if work_dir.parent == Path('.'):
             binary_path = work_dir.joinpath(downloaddriver.driverfilename).absolute()
         else:
             binary_path = work_dir.joinpath(downloaddriver.driverfilename).as_posix()
@@ -107,3 +107,4 @@ for runi in range(runtimes):
     for i in range(total_cpu):
         t = threading.Thread(target=run_driver)
         t.start()
+    time.sleep(10*movie_time)
