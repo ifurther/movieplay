@@ -10,10 +10,11 @@ from movieplay.downdriver import WindowsDownloadDriver,LinuxDownloadDriver
 from movieplay.dirversetting import FirefoxDriver,ChromeDriver
 from movieplay import initconfig
 config = configparser.ConfigParser()
-try:
+if Path('config.ini').exists():
     config.read('config.ini')
-except:
+else:
     initconfig
+    config.read('config.ini')
 work_dir = Path(config['GLOBAL']['WORKDIR'])
 runtimes = int(config['GLOBAL']['RUNNUMBER'])
 target_url = config['MOVIE']['MOVIEURL']
