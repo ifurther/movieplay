@@ -107,4 +107,4 @@ for runi in range(runtimes):
     for i in range(total_cpu):
         t = threading.Thread(target=run_driver)
         t.start()
-    time.sleep(10*movie_time)
+    time.sleep(movie_time)
