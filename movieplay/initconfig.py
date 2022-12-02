@@ -4,6 +4,7 @@ config = configparser.ConfigParser()
 
 config['GLOBAL'] = {}
 config['GLOBAL']['WORKDIR']='.'
+config['GLOBAL']['RUNNUMBER']=str(10)
 config['THREAD'] = {}
 config['THREAD']['TABNUMBER'] = str(2)
 config['MOVIE'] = {}

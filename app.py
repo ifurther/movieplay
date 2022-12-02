@@ -15,6 +15,7 @@ try:
 except:
     initconfig
 work_dir = Path(config['GLOBAL']['WORKDIR'])
+runtimes = int(config['GLOBAL']['RUNNUMBER'])
 target_url = config['MOVIE']['MOVIEURL']
 movie_time = int(config['MOVIE']['MOVIETIME'])
 total_cpu = int(config['THREAD']['TABNUMBER'])
@@ -102,6 +103,7 @@ def run_driver():
         time.sleep(movie_time)# 等待时常
     finally:
         Fdriver.driver.quit()
-for i in range(total_cpu):
-    t = threading.Thread(target=run_driver)
-    t.start()
+for runi in range(runtimes):
+    for i in range(total_cpu):
+        t = threading.Thread(target=run_driver)
+        t.start()
