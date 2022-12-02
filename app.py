@@ -1,18 +1,23 @@
-import platform,json,requests,time,threading
-from pathlib import Path
+import platform,json,requests,time,threading,configparser
+from pathlib import Path,PosixPath
 from urllib.parse import urlparse
 from fake_useragent import UserAgent
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from downdriver import WindowsDownloadDriver,LinuxDownloadDriver
-from headless import FirefoxDriver,ChromeDriver
-
-work_dir = Path('.')
-target_url = 'https://youtu.be/FcMKA16LmHA'
-movie_time = 170
-total_cpu = 2
+from movieplay.downdriver import WindowsDownloadDriver,LinuxDownloadDriver
+from movieplay.dirversetting import FirefoxDriver,ChromeDriver
+from movieplay import initconfig
+config = configparser.ConfigParser()
+try:
+    config.read('config.ini')
+except:
+    initconfig
+work_dir = Path(config['GLOBAL']['WORKDIR'])
+target_url = config['MOVIE']['MOVIEURL']
+movie_time = int(config['MOVIE']['MOVIETIME'])
+total_cpu = int(config['THREAD']['TABNUMBER'])
 
 print('work dir:',work_dir.absolute())
 target_os = platform.system()
@@ -34,7 +39,7 @@ with open('chromediverdownloadlist.json','r') as ch:
     chrome_links = json.load(ch)
 
 if target_os == 'Windows':
-    from get_win_browser import get_browser_path
+    from movieplay.get_win_browser import get_browser_path
     if target_os == 'Windows' and target_architecture == ('64bit', 'WindowsPE'):
         paths_dict = get_browser_path(BROWSER_PATH)
         if 'chrome' in paths_dict:
@@ -72,13 +77,21 @@ def run_driver():
         from selenium.webdriver.chrome.options import Options
         opts = Options()
         opts.add_argument("--incognito")
+        if work_dir.parent == PosixPath('.'):
+            binary_path = work_dir.joinpath(downloaddriver.driverfilename).absolute()
+        else:
+            binary_path = work_dir.joinpath(downloaddriver.driverfilename).as_posix()
         opts.binary_location = Path(CHROME_BINARY).as_posix()
-        Fdriver = ChromeDriver(HEADER, target_url, work_dir.joinpath(downloaddriver.driverfilename).as_posix(), opts)
+        Fdriver = ChromeDriver(HEADER, target_url, binary_path, opts)
     elif downloaddriver.browser == 'firefox':
         from selenium.webdriver.firefox.options import Options
         opts = Options()
         opts.add_argument("--incognito")
-        Fdriver = FirefoxDriver(HEADER, target_url, FIREFOX_BINARY, work_dir.joinpath(downloaddriver.driverfilename).as_posix(), opts)    
+        if work_dir.parent == PosixPath('.'):
+            binary_path = work_dir.joinpath(downloaddriver.driverfilename).absolute()
+        else:
+            binary_path = work_dir.joinpath(downloaddriver.driverfilename).as_posix()
+        Fdriver = FirefoxDriver(HEADER, target_url, FIREFOX_BINARY, binary_path, opts)
 
     Fdriver.getpage()
     try:
