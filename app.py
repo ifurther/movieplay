@@ -22,7 +22,7 @@ threadingLocal = threading.local()
 BROWSER_PATH = {
     '360jisu': 'SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\\360chrome.exe',
     'chrome': 'SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe',
-    'edge': 'SOFTWARE\Clients\StartMenuInternet\Microsoft Edge\DefaultIcon',
+    'edge': 'SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\msedge.exe',
     'firefox': 'SOFTWARE\Clients\StartMenuInternet\FIREFOX.EXE\DefaultIcon'
 }
 
@@ -72,12 +72,13 @@ def run_driver():
         from selenium.webdriver.chrome.options import Options
         opts = Options()
         opts.add_argument("--incognito")
-        Fdriver = ChromeDriver(HEADER, target_url, CHROME_BINARY, work_dir.joinpath(downloaddriver.driverfilename).absolute().driverfilename,opts)
+        opts.binary_location = Path(CHROME_BINARY).as_posix()
+        Fdriver = ChromeDriver(HEADER, target_url, work_dir.joinpath(downloaddriver.driverfilename).as_posix(), opts)
     elif downloaddriver.browser == 'firefox':
         from selenium.webdriver.firefox.options import Options
         opts = Options()
         opts.add_argument("--incognito")
-        Fdriver = FirefoxDriver(HEADER, target_url, FIREFOX_BINARY, work_dir.joinpath(downloaddriver.driverfilename).absolute(), opts)    
+        Fdriver = FirefoxDriver(HEADER, target_url, FIREFOX_BINARY, work_dir.joinpath(downloaddriver.driverfilename).as_posix(), opts)    
 
     Fdriver.getpage()
     try:

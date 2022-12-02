@@ -10,7 +10,6 @@ fake-useragent==0.1.14
 h11==0.14.0
 idna==3.4
 outcome==1.2.0
-pip==22.2.2
 pycparser==2.21
 pyOpenSSL==20.0.1
 PySocks==1.7.1
