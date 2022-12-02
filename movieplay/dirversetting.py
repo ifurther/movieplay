@@ -42,8 +42,7 @@ class FirefoxDriver(Driver):
         self.driver = webdriver.Firefox(firefox_binary = self.firefox_binary, executable_path = self.executable_path, options=options) # firefox_profile = self.profile
 
 class ChromeDriver(Driver):
-    def __init__(self, header, url, chrome_binary, executable_path, options) -> None:
+    def __init__(self, header, url, executable_path, options) -> None:
         super().__init__(header, url)
-        self.chrome_binary = chrome_binary
         self.executable_path = executable_path
-        self.driver = webdriver.Chrome(chrome_binary = self.chrome_binary, executable_path = self.executable_path, options=options)
+        self.driver = webdriver.Chrome(executable_path = self.executable_path, options=options)

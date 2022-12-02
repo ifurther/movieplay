@@ -2,4 +2,7 @@ geckodriver
 *.zip
 *.tar.gz
 *.log
+*.ini
 __pycache__/*
+*/__pycache__/*
+chromedriver.exe
