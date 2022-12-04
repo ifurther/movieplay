@@ -29,11 +29,12 @@ BROWSER_PATH = {
     '360jisu': 'SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\\360chrome.exe',
     'chrome': 'SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe',
     'edge': 'SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\msedge.exe',
-    'firefox': 'SOFTWARE\Clients\StartMenuInternet\FIREFOX.EXE\DefaultIcon'
+    'firefox': 'SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\\firefox.exe'
 }
 
-HEADER = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:53.0) Gecko/20100101 Firefox/106.0"
-
+#HEADER = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:53.0) Gecko/20100101 Firefox/106.0"
+AGENT = UserAgent(browsers=['edge', 'chrome','firefox'])
+HEADER = AGENT.random
 with open('firefoxdiverdownloadlist.json','r') as ch:
     firefox_links = json.load(ch)
 with open('chromediverdownloadlist.json','r') as ch:
