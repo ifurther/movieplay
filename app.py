@@ -102,7 +102,7 @@ def run_driver():
             EC.presence_of_element_located((By.ID, "movie_player")
         ))
         element.click()
-        time.sleep(movie_time)# 等待时常
+        time.sleep(movie_time)
     finally:
         Fdriver.driver.quit()
 for runi in range(runtimes):
