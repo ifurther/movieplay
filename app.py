@@ -106,7 +106,7 @@ def run_driver():
     finally:
         Fdriver.driver.quit()
 for runi in range(runtimes):
-    print('({}/{}) running times'.format(runi,runtimes))
+    print('({}/{}) running times'.format(runi+1,runtimes+1))
     for i in range(total_cpu):
         t = threading.Thread(target=run_driver)
         t.start()
