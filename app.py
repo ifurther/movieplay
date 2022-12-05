@@ -1,4 +1,4 @@
-import platform,json,requests,time,threading,configparser
+import os,platform,json,requests,time,threading,configparser
 from pathlib import Path,PosixPath
 from urllib.parse import urlparse
 from fake_useragent import UserAgent
@@ -48,15 +48,14 @@ if target_os == 'Windows':
         if 'chrome' in paths_dict:
             WN_BROWSER = 'chrome'
             CHROME_BINARY = paths_dict['chrome']
+            CHROME_VERSION = os.popen("{} --version".format(CHROME_BINARY)).read().strip('Google Chrome ').strip()
         elif 'firefox' in paths_dict:
             WN_BROWSER = 'firefox'
             FIREFOX_BINARY = paths_dict['firefox']
+            FIREFOX_VERSION = os.popen("{} --version".format(FIREFOX_BINARY)).read().strip('Mozilla Firefox  ').strip()
         downloaddriver = WindowsDownloadDriver('64bit', 'Windows', WN_BROWSER)
         downloaddriver.download(chrome_links, firefox_links)
         downloaddriver.extract(work_dir)
-
-
-
 elif target_os == 'Linux':
     if target_os == 'Linux' and target_architecture == ('64bit', 'ELF'):
         try:
@@ -68,13 +67,19 @@ elif target_os == 'Linux':
             if Path('/usr/bin/google-chrome').exists():
                 LN_BROWSER = 'chrome'
                 CHROME_BINARY = '/usr/bin/google-chrome'
+                CHROME_VERSION = os.popen("{} --version".format(CHROME_BINARY)).read().strip('Google Chrome ').strip()
             elif Path('/usr/bin/firefox').exists():
                 LN_BROWSER = 'firefox'
                 FIREFOX_BINARY = '/usr/bin/firefox'
+                FIREFOX_VERSION = os.popen("{} --version".format(FIREFOX_BINARY)).read().strip('Mozilla Firefox  ').strip()
             downloaddriver = LinuxDownloadDriver('64bit','Linux', LN_BROWSER)
             downloaddriver.download(chrome_links, firefox_links)
             downloaddriver.extract(work_dir)
-
+elif target_os == "darwin":
+    # OS X
+    if Path("/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome").exists():
+        LN_BROWSER = 'chrome'
+        CHROME_BINARY = '/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
 def run_driver():
     if downloaddriver.browser == 'chrome':
         from selenium.webdriver.chrome.options import Options
