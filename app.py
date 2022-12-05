@@ -36,9 +36,9 @@ BROWSER_PATH = {
 #HEADER = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:53.0) Gecko/20100101 Firefox/106.0"
 AGENT = UserAgent(browsers=['edge', 'chrome','firefox'])
 HEADER = AGENT.random
-with open('firefoxdiverdownloadlist.json','r') as ch:
+with open('data/firefoxdiverdownloadlist.json','r') as ch:
     firefox_links = json.load(ch)
-with open('chromediverdownloadlist.json','r') as ch:
+with open('data/chromediverdownloadlist.json','r') as ch:
     chrome_links = json.load(ch)
 
 if target_os == 'Windows':
