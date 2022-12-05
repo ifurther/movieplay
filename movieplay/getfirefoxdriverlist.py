@@ -25,5 +25,5 @@ data = {
 }
 
 
-with open('firefoxdiverdownloadlist.json','w') as ch:
+with open('data/firefoxdiverdownloadlist.json','w') as ch:
     json.dump(data,ch)
