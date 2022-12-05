@@ -39,7 +39,7 @@ if r.ok:
     root = ET.fromstring(r.content)
     no, data = getjsondata(root)
     if getCountContents(root) == no:
-        with open('chromediverdownloadlist.json','w') as ch:
+        with open('data/chromediverdownloadlist.json','w') as ch:
             json.dump(data,ch)
         print('finished')
 
