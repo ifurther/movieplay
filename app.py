@@ -112,6 +112,16 @@ def run_driver():
         Fdriver.driver.quit()
 for runi in range(runtimes):
     print('({}/{}) running times'.format(runi+1,runtimes+1))
+    if target_os == 'Windows':
+        if WN_BROWSER == 'firefox':
+            print('Firefox version: {}'.format(FIREFOX_VERSION))
+        elif WN_BROWSER == 'chrome':
+            print('Chrome version: {}'.format(CHROME_VERSION))
+    elif target_os == 'Linux':
+        if LN_BROWSER == 'firefox':
+            print('Firefox version: {}'.format(FIREFOX_VERSION))
+        elif LN_BROWSER == 'chrome':
+            print('Chrome version: {}'.format(CHROME_VERSION))
     for i in range(total_cpu):
         t = threading.Thread(target=run_driver)
         t.start()
