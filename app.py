@@ -49,7 +49,6 @@ if target_os == 'Windows':
             WN_BROWSER = 'chrome'
             CHROME_BINARY = paths_dict['chrome']
             CHROME_VERSION = list(Path(CHROME_BINARY).parent.iterdir())[0].name
-            #CHROME_VERSION = os.popen("{} --version".format(CHROME_BINARY)).read().strip('Google Chrome ').strip()
         elif 'firefox' in paths_dict:
             WN_BROWSER = 'firefox'
             FIREFOX_BINARY = paths_dict['firefox']
