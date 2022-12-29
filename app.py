@@ -85,6 +85,10 @@ def run_driver():
         from selenium.webdriver.chrome.options import Options
         opts = Options()
         opts.add_argument("--incognito")
+        opts.add_argument('--disable-gpu')
+        opts.add_experimental_option("excludeSwitches", ["enable-automation"])
+        opts.add_experimental_option('useAutomationExtension', False)
+        opts.add_experimental_option("prefs", {"profile.password_manager_enabled": False, "credentials_enable_service": False})
         if work_dir.parent == Path('.'):
             binary_path = work_dir.joinpath(downloaddriver.driverfilename).absolute()
         else:
