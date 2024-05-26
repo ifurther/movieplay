@@ -14,7 +14,7 @@ pycparser==2.21
 pyOpenSSL==20.0.1
 PySocks==1.7.1
 python-gnupg==0.5.0
-requests==2.31.0
+requests==2.32.0
 selenium==4.6.0
 setuptools==65.5.1
 six==1.16.0
